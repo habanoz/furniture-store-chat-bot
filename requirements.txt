@@ -44,7 +44,6 @@ pandas
 Pillow
 pinecone-client
 pkgutil_resolve_name
-protobuf
 pyarrow
 pydantic
 pydeck
@@ -78,3 +77,4 @@ validators
 watchdog
 yarl
 zipp
+protobuf==3.20.*
