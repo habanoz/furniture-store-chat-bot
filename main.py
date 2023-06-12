@@ -9,6 +9,7 @@ from langchain.prompts import (
 )
 import streamlit as st
 from streamlit_chat import message
+import utils
 
 st.subheader("Hoşgeldiniz...")
 
@@ -18,10 +19,11 @@ if 'responses' not in st.session_state:
 if 'requests' not in st.session_state:
     st.session_state['requests'] = []
 
-llm = ChatOpenAI(model_name="gpt-3.5-turbo", openai_api_key="")
+llm = ChatOpenAI(model_name="gpt-3.5-turbo")
 
 if 'buffer_memory' not in st.session_state:
     st.session_state.buffer_memory = ConversationBufferWindowMemory(k=3, return_messages=True)
+
 template = """Answer the question as truthfully as possible using the provided context, and if the answer is not contained within the text below, say 'I don't know'"""
 system_msg_template = SystemMessagePromptTemplate.from_template(template=template)
 
@@ -40,14 +42,8 @@ textcontainer = st.container()
 with textcontainer:
     query = st.text_input("Query: ", key="input")
     if query:
-        with st.spinner("typing..."):
-            conversation_string = get_conversation_string()
-            # st.code(conversation_string)
-            refined_query = query_refiner(conversation_string, query)
-            st.subheader("Refined Query:")
-            st.write(refined_query)
-            context = find_match(refined_query)
-            # print(context)  
+        with st.spinner("yazıyor..."):
+            context = utils.find_context(query)
             response = conversation.predict(input=f"Context:\n {context} \n\n Query:\n{query}")
         st.session_state.requests.append(query)
         st.session_state.responses.append(response)
