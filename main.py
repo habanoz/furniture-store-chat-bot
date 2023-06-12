@@ -44,6 +44,7 @@ with textcontainer:
     if query:
         with st.spinner("yazıyor..."):
             context = utils.find_context(query)
+            print("- Context:",context, "Query:", query)
             response = conversation.predict(input=f"Context:\n {context} \n\n Query:\n{query}")
         st.session_state.requests.append(query)
         st.session_state.responses.append(response)

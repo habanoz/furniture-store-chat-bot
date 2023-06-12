@@ -12,7 +12,7 @@ index = pinecone.Index('mobilya1')
 docsearch = Pinecone.from_existing_index(index_name, OpenAIEmbeddings())
 
 def find_context(query):
-    docs = docsearch.similarity_search(query, k=2)
+    docs = docsearch.similarity_search(query, k=4)
     return "".join(doc.page_content for doc in docs)
 
 
