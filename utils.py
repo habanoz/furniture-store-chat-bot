@@ -1,19 +1,7 @@
-import pinecone
 import openai
 import streamlit as st
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vectorstores import Pinecone
-import os
 
-index_name = "mobilya1"
-pinecone.init(api_key=os.environ['PINECONE_API_KEY'], environment=os.environ['PINECONE_ENV'])
 
-index = pinecone.Index('mobilya1')
-docsearch = Pinecone.from_existing_index(index_name, OpenAIEmbeddings())
-
-def find_context(query):
-    docs = docsearch.similarity_search(query, k=4)
-    return "".join(doc.page_content for doc in docs)
 
 
 def query_refiner(conversation, query):
